@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time 
+import os
 
 # Selfmade depenendices
 import utils as utl
@@ -28,7 +29,7 @@ def findMatch_onClick( input_descr , expense_database  ) :
         print( "No match!")
 
 # Data management
-categories_file = r"C:\Users\matte\Desktop\Git\ExpenseHandler_Automator\UsciteCTRL_19Mag2024.csv"
+categories_file = os.path.abspath( r"C:\Users\matte\Desktop\Git\ExpenseHandler_Automator\UsciteCTRL_19Mag2024.csv" )
 cat_database = utl.createCatDatabase( categories_file )
 
 # Web App Management
