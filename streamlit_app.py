@@ -2,19 +2,19 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time 
-import os
 
 # Selfmade depenendices
 import utils as utl
 
+def updateOutput_onClick( conn , new_expense , existing_data ) :
     
+    updated_frame = pd.concat( [existing_data , new_expense ] , ignore_index = True )
+    conn.update( worksheet = "Uscite" , data = updated_frame )
 
 def findMatch_onClick( input_descr , expense_database  ) :
-
-    
+  
     match = utl.findMatch( input_descr , expense_database ) 
     print( f"Input Description: { input_descr} ")
-
 
     if match != None :
         print( f"Category: {match[0]}" )
@@ -45,13 +45,24 @@ expense_database = utl.createExpenseDatabase( existing_data )
 
 # Page creation
 expense_date = st.date_input( "Expense date")
+expense_amount = st.number_input( "Expense amount" )
 expense_description = st.text_input( label = "Expense description" , key = "descr" )
 expense_category = st.selectbox( "Categories" , cat_database.keys() , key = "cat" )
 expense_subcategory = st.selectbox( "Subcategory" ,  options = cat_database[ expense_category ]  , key = "subcat")
 expense_fixed = st.checkbox( label = "Fixed?" , key = "Fixed" )
 
+new_expense = pd.DataFrame( 
+    [
+     {
+       "Date" : expense_date ,
+       "Valore" : expense_amount ,
+       "Description" : expense_description ,
+       "Categoria" : expense_category ,
+       "Tag" : expense_subcategory ,
+       "Fissa?" : expense_fixed
+      }
+     ]
+    )
 
-
-
-add_button = st.button( label = "Add expense"  )
+add_button = st.button( label = "Add expense" , on_click = updateOutput_onClick , args = [ conn , new_expense , existing_data ] )
 match_button = st.button( label = "Match expense" , on_click = findMatch_onClick , args = [ st.session_state.descr , expense_database ] ) 
