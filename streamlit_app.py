@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 import time 
+import datetime
 
 # Selfmade depenendices
 import utils as utl
@@ -38,7 +39,7 @@ st.markdown( "Questo è un messaggio di prova" )
 
 # Connetting and getting existinga data as a pandas data frame
 conn = st.connection( "gsheets" , type = GSheetsConnection )
-existing_data = conn.read( worksheet = "Uscite"  , usecols = list( range( 6 ) ) , ttl = 5)
+existing_data = conn.read( worksheet = "Uscite"  , usecols = list( range( 8 ) ) , ttl = 5)
 existing_data = existing_data.dropna( how = "all" )
 expense_database = utl.createExpenseDatabase( existing_data )
 #st.dataframe( existing_data )
@@ -51,6 +52,7 @@ expense_category = st.selectbox( "Categories" , cat_database.keys() , key = "cat
 expense_subcategory = st.selectbox( "Subcategory" ,  options = cat_database[ expense_category ]  , key = "subcat")
 expense_fixed = st.checkbox( label = "Fixed?" , key = "Fixed" )
 
+
 new_expense = pd.DataFrame( 
     [
      {
@@ -59,7 +61,9 @@ new_expense = pd.DataFrame(
        "Description" : expense_description ,
        "Categoria" : expense_category ,
        "Tag" : expense_subcategory ,
-       "Fissa?" : expense_fixed
+       "Fissa?" : "TRUE" ,
+       "Commenti" : "" ,
+       "M" : expense_date.month
       }
      ]
     )

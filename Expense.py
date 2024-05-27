@@ -7,4 +7,5 @@ class Entry :
         self.descr =str( descr )
         self.cat = cat
         self.subcat = subcat
-        self.fixed = fixed 
+        if fixed == True : self.fixed = "TRUE"
+        else : self.fixed = "FALSE"
