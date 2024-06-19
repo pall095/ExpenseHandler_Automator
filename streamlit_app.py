@@ -10,7 +10,6 @@ import utils as utl
 def updateOutput_onClick( conn , new_expense , existing_data ) :
     
     updated_frame = pd.concat( [existing_data , new_expense ] , ignore_index = True )
-    updated_frame = updated_frame.dropna( )
     conn.update( worksheet = "Uscite" , data = updated_frame )
 
 def findMatch_onClick( input_descr , expense_database  ) :
