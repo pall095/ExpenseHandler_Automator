@@ -2,6 +2,32 @@ import pandas as pd
 from Expense import Entry
 
 
+
+def createNewExpense( expense_list ) :
+    
+    if "" in expense_list :
+        return 1
+    
+    if expense_list[ 1 ] == 0 :
+        return 2
+    
+    new_expense = pd.DataFrame( 
+        [
+         {
+           "Date" : expense_list[ 0 ] ,
+           "Valore" : expense_list[ 1 ] ,
+           "Description" : expense_list[ 2 ] ,
+           "Categoria" : expense_list[ 3 ] ,
+           "Tag" : expense_list[ 4 ] ,
+           "Fissa?" : "TRUE" if expense_list[ 5 ] == 1 else "FALSE" ,
+           "Commenti" : "" ,
+           "M" : expense_list[ 0 ].month
+          }
+         ]
+        )
+    
+    return new_expense
+
 def findMatch( descr , expense_database ) :
     
     for exp in expense_database :
