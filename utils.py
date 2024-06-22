@@ -3,6 +3,18 @@ from Expense import Entry
 
 
 
+def reshapeFrame( existing_data ) :
+    
+    for row , content in existing_data.iterrows( ) :
+        
+        if content.loc[ "Fissa?" ] == 1 :
+            existing_data.loc[ row , "Fissa?" ] = "TRUE"
+        else:
+            existing_data.loc[ row , "Fissa?" ] = "FALSE"
+            
+    return existing_data
+
+
 def createNewExpense( expense_list ) :
     
     if "" in expense_list :

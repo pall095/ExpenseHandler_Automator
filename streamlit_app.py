@@ -61,6 +61,8 @@ st.markdown( "Applicazione creata da Matteo Pallomo" )
 conn = st.connection( "gsheets" , type = GSheetsConnection )
 existing_data = conn.read( worksheet = "Uscite"  , usecols = list( range( 8 ) ) , ttl = 5)
 existing_data = existing_data.dropna( how = "all" )
+existing_data = utl.reshapeFrame( existing_data )
+
 expense_database = utl.createExpenseDatabase( existing_data )
 #st.dataframe( existing_data )
 
