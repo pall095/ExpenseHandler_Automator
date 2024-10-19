@@ -45,6 +45,7 @@ def findMatch( descr , expense_database ) :
     for exp in expense_database :
         
         if descr in exp.descr :
+            
             return [ exp.cat , exp.subcat , bool( exp.fixed ) ]
         
     return None
